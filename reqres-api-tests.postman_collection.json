@@ -1,0 +1,973 @@
+{
+  "info": {
+    "_postman_id": "fe65ef16-3ac9-406a-b1ff-7127050bbef8",
+    "name": "ReqRes API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50559752",
+    "_collection_link": "https://go.postman.co/collection/50559752-fe65ef16-3ac9-406a-b1ff-7127050bbef8?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Users - Positive",
+      "item": [
+        {
+          "name": "GET - List Users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta possui lista de usuários\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"data\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Lista de usuários não está vazia\", function () {\r",
+                  "    pm.expect(jsonData.data.length).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    page: { type: \"number\" },\r",
+                  "    per_page: { type: \"number\" },\r",
+                  "    total: { type: \"number\" },\r",
+                  "    total_pages: { type: \"number\" },\r",
+                  "    data: {\r",
+                  "      type: \"array\",\r",
+                  "      items: {\r",
+                  "        type: \"object\",\r",
+                  "        properties: {\r",
+                  "          id: { type: \"number\" },\r",
+                  "          email: { type: \"string\" },\r",
+                  "          first_name: { type: \"string\" },\r",
+                  "          last_name: { type: \"string\" },\r",
+                  "          avatar: { type: \"string\" }\r",
+                  "        },\r",
+                  "        required: [\"id\",\"email\",\"first_name\",\"last_name\",\"avatar\"]\r",
+                  "      }\r",
+                  "    }\r",
+                  "  },\r",
+                  "  required: [\"page\",\"per_page\",\"total\",\"total_pages\",\"data\"]\r",
+                  "};\r",
+                  "\r",
+                  "pm.test(\"Schema da resposta é válido\", function () {\r",
+                  "    pm.response.to.have.jsonSchema(schema);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users?page=2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            },
+            "description": "Retorna uma lista de usuários da API.\n\nValida status da resposta, tempo de resposta e estrutura do JSON retornado."
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Single User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta possui objeto data\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"data\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Usuário retornado possui ID 2\", function () {\r",
+                  "    pm.expect(jsonData.data.id).to.eql(2);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Email tem formato válido\", function () {\r",
+                  "    const emailRegex = /\\S+@\\S+\\.\\S+/;\r",
+                  "    pm.expect(jsonData.data.email).to.match(emailRegex);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Usuário possui first_name e last_name\", function () {\r",
+                  "    pm.expect(jsonData.data).to.have.property(\"first_name\");\r",
+                  "    pm.expect(jsonData.data).to.have.property(\"last_name\");\r",
+                  "});\r",
+                  "\r",
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    data: {\r",
+                  "      type: \"object\",\r",
+                  "      properties: {\r",
+                  "        id: { type: \"number\" },\r",
+                  "        email: { type: \"string\" },\r",
+                  "        first_name: { type: \"string\" },\r",
+                  "        last_name: { type: \"string\" },\r",
+                  "        avatar: { type: \"string\" }\r",
+                  "      },\r",
+                  "      required: [\"id\",\"email\",\"first_name\",\"last_name\",\"avatar\"]\r",
+                  "    },\r",
+                  "    support: {\r",
+                  "      type: \"object\",\r",
+                  "      properties: {\r",
+                  "        url: { type: \"string\" },\r",
+                  "        text: { type: \"string\" }\r",
+                  "      }\r",
+                  "    }\r",
+                  "  },\r",
+                  "  required: [\"data\",\"support\"]\r",
+                  "};\r",
+                  "\r",
+                  "pm.test(\"Schema da resposta é válido\", function () {\r",
+                  "    pm.response.to.have.jsonSchema(schema);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "2"
+              ]
+            },
+            "description": "Busca um usuário específico pelo ID.\n\nValida se os dados do usuário são retornados corretamente."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Create User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.environment.set(\"user_id\", jsonData.id);\r",
+                  "\r",
+                  "pm.test(\"user_id foi salvo no environment\", function () {\r",
+                  "    pm.expect(pm.environment.get(\"user_id\")).to.not.be.undefined;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"{{randomUser}}\",\r\n  \"job\": \"{{randomJob}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Cria um novo usuário na API.\n\nO ID retornado é salvo como variável (user_id) para ser utilizado nos testes de atualização e exclusão."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Update User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"user_id foi gerado\", function () {\r",
+                  "    pm.expect(pm.environment.get(\"user_id\")).to.not.be.undefined;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Deve retornar status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta possui campos esperados\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"name\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"job\");\r",
+                  "    pm.expect(jsonData).to.have.property(\"updatedAt\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Dados foram atualizados corretamente\", function () {\r",
+                  "    pm.expect(jsonData.name).to.eql(\"QA-Atualizado\");\r",
+                  "    pm.expect(jsonData.job).to.eql(\"Senior QA\");\r",
+                  "});\r",
+                  "\r",
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    name: { type: \"string\" },\r",
+                  "    job: { type: \"string\" },\r",
+                  "    updatedAt: { type: \"string\" }\r",
+                  "  },\r",
+                  "  required: [\"name\",\"job\",\"updatedAt\"]\r",
+                  "};\r",
+                  "\r",
+                  "pm.test(\"Schema da resposta é válido\", function () {\r",
+                  "    pm.response.to.have.jsonSchema(schema);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"QA-Atualizado\",\r\n  \"job\": \"Senior QA\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            },
+            "description": "Atualiza os dados de um usuário existente.\n\nUtiliza a variável user_id gerada no teste de criação de usuário."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Resposta não possui conteúdo\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.eql(\"\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Body da resposta está vazio\", function () {\r",
+                  "    pm.expect(pm.response.size().body).to.eql(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            },
+            "description": "Remove um usuário da API.\n\nUtiliza o user_id salvo anteriormente para executar a exclusão."
+          },
+          "response": []
+        }
+      ],
+      "description": "Testes de fluxo positivo da API de usuários.  \nValida listagem, consulta, criação, atualização e exclusão."
+    },
+    {
+      "name": "Users - Negative",
+      "item": [
+        {
+          "name": "GET - User Not Found (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta não possui dados de usuário\", function () {\r",
+                  "    pm.expect(Object.keys(jsonData).length).to.eql(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "999"
+              ]
+            },
+            "description": "Testa o comportamento da API ao buscar um usuário inexistente.\n\nValida retorno de erro 404."
+          },
+          "response": []
+        }
+      ],
+      "description": "Testes negativos da API de usuários.\n\nValida o comportamento da API quando dados inválidos ou inexistentes são utilizados.  \nInclui cenários como busca por usuário inexistente (404).\n\nEsses testes garantem que a API trata erros corretamente."
+    },
+    {
+      "name": "Authentication - Positive",
+      "item": [
+        {
+          "name": "POST - Login Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta contém token\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"token\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Token é uma string válida\", function () {\r",
+                  "    pm.expect(jsonData.token).to.be.a(\"string\");\r",
+                  "    pm.expect(jsonData.token.length).to.be.above(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"eve.holt@reqres.in\",\r\n  \"password\": \"cityslicka\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            },
+            "description": "Testa login com credenciais válidas.\n\nValida retorno de token de autenticação."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Register Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta possui id\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Resposta possui token\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"token\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Token é string válida\", function () {\r",
+                  "    pm.expect(jsonData.token).to.be.a(\"string\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"eve.holt@reqres.in\",\r\n  \"password\": \"pistol\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "register"
+              ]
+            },
+            "description": "Testa o cadastro de usuário com dados válidos.\n\nValida retorno de id e token."
+          },
+          "response": []
+        }
+      ],
+      "description": "Testes positivos de autenticação.\n\nValida cenários de sucesso de login e registro de usuário, garantindo que a API retorne tokens válidos e respostas corretas quando as credenciais são válidas."
+    },
+    {
+      "name": "Authentication - Negative",
+      "item": [
+        {
+          "name": "POST - Login Missing Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta contém campo error\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"error\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensagem menciona password\", function () {\r",
+                  "    pm.expect(jsonData.error.toLowerCase()).to.include(\"password\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"eve.holt@reqres.in\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            },
+            "description": "Testa tentativa de login sem senha.\n\nValida retorno de erro 400."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Register Missing Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta contém campo error\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"error\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensagem menciona password\", function () {\r",
+                  "    pm.expect(jsonData.error.toLowerCase()).to.include(\"password\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"{{randomEmail}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "register"
+              ]
+            },
+            "description": "Testa tentativa de cadastro sem senha.\n\nValida retorno de erro da API."
+          },
+          "response": []
+        }
+      ],
+      "description": "Testes de cenários negativos de autenticação.  \nValida tratamento de erro para credenciais inválidas ou dados ausentes."
+    },
+    {
+      "name": "Smoke Tests",
+      "item": [
+        {
+          "name": "SMOKE - GET - List Users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta possui lista de usuários\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"data\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Lista de usuários não está vazia\", function () {\r",
+                  "    pm.expect(jsonData.data.length).to.be.above(0);\r",
+                  "});\r",
+                  "\r",
+                  "const schema = {\r",
+                  "  type: \"object\",\r",
+                  "  properties: {\r",
+                  "    page: { type: \"number\" },\r",
+                  "    per_page: { type: \"number\" },\r",
+                  "    total: { type: \"number\" },\r",
+                  "    total_pages: { type: \"number\" },\r",
+                  "    data: {\r",
+                  "      type: \"array\",\r",
+                  "      items: {\r",
+                  "        type: \"object\",\r",
+                  "        properties: {\r",
+                  "          id: { type: \"number\" },\r",
+                  "          email: { type: \"string\" },\r",
+                  "          first_name: { type: \"string\" },\r",
+                  "          last_name: { type: \"string\" },\r",
+                  "          avatar: { type: \"string\" }\r",
+                  "        },\r",
+                  "        required: [\"id\",\"email\",\"first_name\",\"last_name\",\"avatar\"]\r",
+                  "      }\r",
+                  "    }\r",
+                  "  },\r",
+                  "  required: [\"page\",\"per_page\",\"total\",\"total_pages\",\"data\"]\r",
+                  "};\r",
+                  "\r",
+                  "pm.test(\"Schema da resposta é válido\", function () {\r",
+                  "    pm.response.to.have.jsonSchema(schema);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users?page=2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            },
+            "description": "Retorna uma lista de usuários da API.\n\nValida status da resposta, tempo de resposta e estrutura do JSON retornado."
+          },
+          "response": []
+        },
+        {
+          "name": "SMOKE - POST - Create User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.environment.set(\"user_id\", jsonData.id);\r",
+                  "\r",
+                  "pm.test(\"user_id foi salvo no environment\", function () {\r",
+                  "    pm.expect(pm.environment.get(\"user_id\")).to.not.be.undefined;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"QA-{{$timestamp}}\",\r\n  \"job\": \"QA Engineer\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Cria um novo usuário na API.\n\nO ID retornado é salvo como variável (user_id) para ser utilizado nos testes de atualização e exclusão."
+          },
+          "response": []
+        },
+        {
+          "name": "SMOKE - POST - Login Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Deve retornar status 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const jsonData = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Resposta contém token\", function () {\r",
+                  "    pm.expect(jsonData).to.have.property(\"token\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Token é uma string válida\", function () {\r",
+                  "    pm.expect(jsonData.token).to.be.a(\"string\");\r",
+                  "    pm.expect(jsonData.token.length).to.be.above(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "reqres_1aa7c18924834a3b8f842a3c5b35815a",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"eve.holt@reqres.in\",\r\n  \"password\": \"cityslicka\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "login"
+              ]
+            },
+            "description": "Testa login com credenciais válidas.\n\nValida retorno de token de autenticação."
+          },
+          "response": []
+        }
+      ],
+      "description": "Conjunto de testes rápidos para validar o funcionamento básico da API.\n\nOs smoke tests executam apenas endpoints críticos para garantir que o sistema está operacional antes da execução completa da suíte de testes.\n\nInclui: listagem de usuários, criação de usuário e autenticação."
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// gera número aleatório\r",
+          "const random = Math.floor(Math.random() * 10000);\r",
+          "\r",
+          "// dados dinâmicos para criação de usuário\r",
+          "pm.environment.set(\"randomUser\", \"QA_User_\" + random);\r",
+          "pm.environment.set(\"randomJob\", \"QA Engineer\");\r",
+          "\r",
+          "// email dinâmico para autenticação\r",
+          "pm.environment.set(\"randomEmail\", \"qa_test_\" + random + \"@test.com\");\r",
+          "\r",
+          "// senha padrão para testes\r",
+          "pm.environment.set(\"testPassword\", \"123456\");"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Testes globais aplicados a todos os endpoints da collection\r",
+          "\r",
+          "pm.test(\"Tempo de resposta menor que 1000ms\", function () {\r",
+          "    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+          "});\r",
+          "\r",
+          "pm.test(\"Content-Type é JSON quando existir body\", function () {\r",
+          "    const contentType = pm.response.headers.get(\"Content-Type\");\r",
+          "    if (contentType) {\r",
+          "        pm.expect(contentType).to.include(\"application/json\");\r",
+          "    }\r",
+          "});"
+        ]
+      }
+    }
+  ]
+}

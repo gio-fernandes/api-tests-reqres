@@ -1,4 +1,4 @@
-# API Tests -- ReqRes
+# API Tests - ReqRes
 
 Projeto de **testes automatizados de API** utilizando **Postman** e
 **Newman** para validar endpoints da API pública **ReqRes**.
@@ -31,27 +31,27 @@ Validar o comportamento da API ReqRes garantindo que:
 
 # Cenários de teste:
 
-## Users -- Positive
+## Users - Positive
 
--   GET -- List Users
--   GET -- Single User
--   POST -- Create User
--   PUT -- Update User
--   DELETE -- User
+-   GET - List Users
+-   GET - Single User
+-   POST - Create User
+-   PUT - Update User
+-   DELETE - User
 
-## Users -- Negative
+## Users - Negative
 
--   GET -- User Not Found
+-   GET - User Not Found
 
-## Authentication -- Positive
+## Authentication - Positive
 
--   POST -- Login Success
--   POST -- Register Success
+-   POST - Login Success
+-   POST - Register Success
 
-## Authentication -- Negative
+## Authentication - Negative
 
--   POST -- Login Missing Password
--   POST -- Register Missing Password
+-   POST - Login Missing Password
+-   POST - Register Missing Password
 
 ## Smoke Tests
 
@@ -99,15 +99,14 @@ Após a execução será gerado:
 
 Na pasta **docs** estão incluídos documentos comuns em projetos de QA:
 
--   **Test Plan** -- planejamento da estratégia de testes
--   **Test Cases** -- cenários detalhados de teste
--   **Bug Report** -- exemplo de registro de defeito
+-   **Test Plan** - planejamento da estratégia de testes
+-   **Test Cases** - cenários detalhados de teste
+-   **Bug Report** - exemplo de registro de defeito
 
 ---
+---
+---
 
-# Autora
 
-**Giovanna Fernandes**
-
-Estudante de **Sistemas de Informação** focada em **Quality Assurance
-(QA)**, automação de testes e qualidade de software.
+🌸 Desenvolvido por Giovanna Fernandes
+Estudante de Sistemas de Informação | QA

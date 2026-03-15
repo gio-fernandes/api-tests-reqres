@@ -7,8 +7,6 @@ Este projeto demonstra práticas de **Quality Assurance (QA)** como
 organização de cenários de teste, validações automatizadas, execução via
 CLI e geração de relatórios.
 
----
-
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![Newman](https://img.shields.io/badge/Newman-Postman%20CLI-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)

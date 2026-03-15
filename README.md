@@ -1,7 +1,7 @@
 # API Tests - ReqRes
 
-Projeto de **testes automatizados de API** utilizando **Postman** e
-**Newman** para validar endpoints da API pública **ReqRes**.
+Projeto de testes automatizados de API utilizando Postman e
+Newman para validar endpoints da API pública ReqRes.
 
 Este projeto demonstra práticas de **Quality Assurance (QA)** como
 organização de cenários de teste, validações automatizadas, execução via
@@ -9,11 +9,11 @@ CLI e geração de relatórios.
 
 ---
 
-![Postman](https://img.shields.io/badge/Postman-API%20Testing-FF6C37?logo=postman&logoColor=white)
-![Newman](https://img.shields.io/badge/Newman-Test%20Runner-0A0A0A?logo=postman&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-Runtime-339933?logo=node.js&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-Test%20Scripts-F7DF1E?logo=javascript&logoColor=black)
-![QA](https://img.shields.io/badge/QA-Automation-blue)
+<p align="left">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" height="50"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="50"/>
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="50"/>
+</p>
 
 ---
 
@@ -61,19 +61,19 @@ Testes rápidos para verificar funcionamento básico da API.
 
 # Execução dos testes:
 
-## 1- Instalar dependências
+## 1. Instalar dependências:
 
     npm install
 
 ---
 
-## 2- Executar testes via Newman
+## 2. Executar testes via Newman:
 
     npx newman run reqres-api-tests.postman_collection.json -e reqres-environment.postman_environment.json
 
 ---
 
-## 3- Gerar relatório HTML
+## 3. Gerar relatório HTML:
 
     npx newman run reqres-api-tests.postman_collection.json -e reqres-environment.postman_environment.json -r cli,htmlextra --reporter-htmlextra-export reports/newman-report.html
 
@@ -83,30 +83,20 @@ Após a execução será gerado:
 
 ---
 
-# Evidências de execução:
+# Evidências da execução:
 
-## Execução via Newman
+### Execução via Newman
 
 ![Execução Newman](screenshots/newman-cli-run.png)
 
-## Relatório de testes
+### Relatório de testes
 
 ![Relatório Newman](screenshots/newman-report.png)
 
 ---
 
-# Documentação:
-
-Na pasta **docs** estão incluídos documentos comuns em projetos de QA:
-
--   **Test Plan** - planejamento da estratégia de testes
--   **Test Cases** - cenários detalhados de teste
--   **Bug Report** - exemplo de registro de defeito
-
----
----
----
-
-
 🌸 Desenvolvido por Giovanna Fernandes
-Estudante de Sistemas de Informação | QA
+
+Estudante de Sistemas de Informação
+
+Focada em Quality Assurance (QA)
